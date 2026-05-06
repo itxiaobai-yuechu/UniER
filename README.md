@@ -6,7 +6,7 @@ UniER consists of two main types of models: **Item-level Exercise Recommendation
 ```bash
 conda create -n unirec python=3.10
 conda activate unirec
-pip install -r requirments.txt
+pip install -r requirements.txt
 ```
 ## Data Preprocessing
 Navigate to `pykt-toolkit/examples` and process the dataset to obtain `train_valid.csv`, `test.csv`, `train_valid_sequences.csv`, and `test_sequences.csv`:
@@ -27,7 +27,7 @@ python evaluate_acc.py
 python evaluate_ndcg.py
 
 python get_final_pro_rec.py
-python merge_data/py
+python merge_data.py
 python filter_rec.py
 python test_ep_all/portion.py
 ```
