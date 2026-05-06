@@ -1,0 +1,91 @@
+encoding_model: cl100k_base
+skip_workflows: []
+llm:
+  api_key: "" 
+  api_base: ""
+  type: openai_chat 
+  model: qwen3.6-plus 
+  model_supports_json: true
+  concurrent_requests: 2
+
+parallelization:
+  stagger: 0.3
+
+
+async_mode: threaded 
+
+embeddings:
+  async_mode: threaded 
+  batch_size: 10
+  llm:
+    api_key: ""
+    api_base: ""
+    type: openai_embedding
+    model: text-embedding-v4
+
+
+  
+
+
+chunks:
+  size: 600
+  overlap: 60
+  group_by_columns: [id] 
+
+input:
+  type: file
+  file_type: text
+  base_dir: "input"
+  file_encoding: utf-8
+  file_pattern: ".*xes3g5m_concepts\\.txt$"
+
+cache:
+  type: file
+  base_dir: "cache"
+
+
+storage:
+  type: file
+  base_dir: "output/${timestamp}/artifacts"
+
+reporting:
+  type: file
+  base_dir: "output/${timestamp}/reports"
+
+entity_extraction:
+  prompt: "prompts-computer/entity_extraction.txt"
+  entity_types: [KNOWLEDGE_CONCEPT]
+  max_gleanings: 1
+
+summarize_descriptions:
+  prompt: "prompts-computer/summarize_descriptions.txt"
+  max_length: 1000
+
+claim_extraction:
+  prompt: "prompts-computer/claim_extraction.txt"
+  description: "Any claims or facts that could be relevant to information discovery."
+  max_gleanings: 1
+
+community_reports:
+  prompt: "prompts-computer/community_report.txt"
+  max_length: 1000
+  max_input_length: 6000
+
+cluster_graph:
+  max_cluster_size: 10
+
+embed_graph:
+  enabled: false 
+
+umap:
+  enabled: false
+
+snapshots:
+  graphml: true
+  raw_entities: true
+  top_level_nodes: true
+
+local_search:
+
+global_search:
+
