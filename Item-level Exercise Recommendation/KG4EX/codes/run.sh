@@ -1,0 +1,1 @@
+python -u run.py --do_train --cuda --data_path ../data/assist2017 --model TransE -n 256 -b 1024 -d 1000 -g 12.0 -a 1.0 -lr 0.001 -adv --max_steps 30000 -save models/assist2017/TransE_adv

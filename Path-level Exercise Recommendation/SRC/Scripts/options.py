@@ -1,0 +1,66 @@
+import os
+from argparse import ArgumentParser, Namespace
+import torch
+
+def get_exp_configure(agent):
+    config_dict = {
+        'embed_size': 48,
+        'hidden_size': 64,
+        'output_size': 1,
+        'dropout': 0.5,
+        'decay_step': 1000,
+        'min_lr': 1e-5,
+        'l2_reg': 4e-5,
+        'predict_hidden_sizes': [256, 64, 16]
+    }
+    if agent == 'MPC':
+        config_dict.update({'hor': 20})
+    if agent == 'DQN':
+        config_dict['hidden_size'] = 128
+    return config_dict
+
+
+def get_options(parser: ArgumentParser, reset_args=None):
+    if reset_args is None:
+        reset_args = {}
+    agent = ['MPC', 'DQN', 'SRC']
+    model = ['DKT', 'CoKT']
+    dataset = ['assist09', 'assist12', 'assist15','assist17', 'algebra2005', 'bridge2006','ednet','junyi','nips34','xes3g5m','mooccubex']
+    parser.add_argument('-a', '--agent', type=str, choices=agent, default='SRC')
+    parser.add_argument('-m', '--model', type=str, choices=model, default='DKT', help='Model used in MPC or KES')
+    parser.add_argument('-d', '--dataset', type=str, choices=dataset, default='assist17')
+    parser.add_argument('-w', '--worker', type=int, default=6)
+    parser.add_argument('-b', '--batch_size', type=int, default=128)
+    parser.add_argument('-p', '--path', type=int, default=3, choices=[0, 1, 2, 3])
+    parser.add_argument('--data_dir', type=str, default='./data')
+    parser.add_argument('--save_dir', type=str, default='./SavedModels')
+    parser.add_argument('--visual_dir', type=str, default='./VisualResults')
+    parser.add_argument('--steps', type=int, default=10)
+    parser.add_argument('--load_model', action='store_true', default=False)
+    parser.add_argument('--withKT', action='store_true', default=False, help='Whether to use KT as a secondary task')
+    parser.add_argument('--binary', action='store_true', default=False, help='Whether the reward is binary')
+
+    parser.add_argument('-c', '--cuda', type=int, default=0)
+    parser.add_argument('--num_epochs', type=int, default=10)
+    parser.add_argument('--lr', type=float, default=1e-3)
+    parser.add_argument('--postfix', type=str, default='')
+    parser.add_argument('--rand_seed', type=int, default=int(os.environ.get('UNIER_SEED', '42')))
+    
+    parser.add_argument('--target_type', type=str,choices=["portion", "all"], default="portion")
+
+    parser.set_defaults(**reset_args)
+    args = parser.parse_args()
+    exp_configure = get_exp_configure(args.agent)
+    args = Namespace(**vars(args), **exp_configure)
+
+    args.exp_name = '_'.join([args.agent, args.model, args.dataset])
+    if args.postfix != '':
+        args.exp_name += '_' + args.postfix
+
+    if torch.cuda.is_available() and args.cuda >= 0:
+        torch.cuda.set_device(args.cuda)
+        args.device = f"cuda:{args.cuda}"
+    else:
+        args.device = "cpu"
+
+    return args

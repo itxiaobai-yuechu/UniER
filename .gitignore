@@ -1,0 +1,87 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Thumbs.db:encryptable
+
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Canonical benchmark data is local and may be very large.
+Datasets/*
+!Datasets/README.md
+
+# Unified-run outputs and model-local compatibility artifacts are reproducible.
+outputs/
+multi_seed_results/
+Path-level Exercise Recommendation/*/data/dataProcess/*/
+Path-level Exercise Recommendation/SRC/data/*/
+Path-level Exercise Recommendation/*/EduSim/SavedAgents/*
+Path-level Exercise Recommendation/*/SavedAgents/*
+Path-level Exercise Recommendation/*/VisualResults/*
+Path-level Exercise Recommendation/*/scripts/kes_logs/
+Path-level Exercise Recommendation/*/EduSim/Envs/KES_*/Experiment_logs/
+Path-level Exercise Recommendation/AC/EduSim/Envs/KES_*/meta_data/env_weights/*
+Path-level Exercise Recommendation/AC/EduSim/Envs/KES_*/meta_data/agent_weights/*
+
+
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+
+
+.env
+.env.local
+.env.*.local
+config.json
+settings.json
+credentials/
+**/wandb.json
+**/settings.local.yaml
+
+
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+.nox/
+.tox/
+
+
+*.mo
+*.pot
+*.manifest
+*.spec

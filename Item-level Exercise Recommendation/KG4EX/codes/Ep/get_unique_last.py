@@ -1,0 +1,14 @@
+import pandas as pd
+import os
+
+dataset = os.environ.get('UNIER_DATASET', 'assist2017')
+test20_path = f"../../data/{dataset}/Test20.csv"  
+output_path = f"../../data/{dataset}/Test20_unique_last.csv" 
+
+df = pd.read_csv(test20_path)
+
+df_unique_last = df.groupby('uid', as_index=False).tail(1)
+
+df_unique_last = df_unique_last.reset_index(drop=True)
+
+df_unique_last.to_csv(output_path, index=False, encoding="utf-8")
